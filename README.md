@@ -1,6 +1,6 @@
 # DT065A-IoT_Protocols
 
-##Functional HTTP Server (Labb 0).
+## Functional HTTP Server (Labb 0).
 The database of this HTTP/Rest server will be handled by a JSON file.
 
 ### Finished tasks
@@ -18,7 +18,7 @@ The database of this HTTP/Rest server will be handled by a JSON file.
 * Exception handler
 
 
-##CoAP Client (Labb 1).
+## CoAP Client (Labb 1).
 
 ### Finished tasks
 * Created types for Message, MethodCode, OptionCode, ResponseCode, TypeCode.
