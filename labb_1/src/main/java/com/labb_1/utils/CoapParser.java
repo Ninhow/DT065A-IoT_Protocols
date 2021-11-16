@@ -1,66 +1,86 @@
 package com.labb_1.utils;
 
-import java.io.PrintWriter;
-import java.util.BitSet;
+import java.math.BigInteger;
+import java.nio.charset.StandardCharsets;
+import java.util.Arrays;
+import java.util.HashMap;
 import java.util.Map;
 
 import com.labb_1.interfaces.CoapParserInterface;
+import com.labb_1.models.Message;
+import com.labb_1.models.OptionCode;
 import com.labb_1.models.ResponseCode;
 import com.labb_1.models.TypeCode;
 
 public class CoapParser implements CoapParserInterface{
 
     @Override
-    public Map<String, String> parseMessage(byte[] message) {
-        
-        System.out.println("Type: " + TypeCode.CodeName(Integer.parseInt((Integer.toBinaryString((message[0] & 0xFF) + 0x100).substring(1)).substring(2, 4), 2)));
-        System.out.println("Token Length: " + Integer.parseInt((Integer.toBinaryString((message[0] & 0xFF) + 0x100).substring(1)).substring(4, 7), 2));
-        System.out.println("Request Code: " + ResponseCode.CodeName(Integer.parseInt((Integer.toBinaryString((message[1] & 0xFF) + 0x100).substring(1)), 2)));
-        String id = Integer.toBinaryString((message[2] & 0xFF) + 0x100).substring(1) + (Integer.toBinaryString((message[3] & 0xFF) + 0x100).substring(1));
-        System.out.println("Message ID: " + Integer.parseInt(id, 2));
-        
-        for ( int i = 4; i < message.length; i++){
-            String representation = Integer.toBinaryString((message[i] & 0xFF) + 0x100).substring(1);
+    public Map<String, String> parseMessage(byte[] message, int length) {
+        int tokenLength = message[0] & 0xF;
+        Message messageParsedTest = new Message();
+        for ( int i = 4 + tokenLength; i < length; i++){
             if(message[i] == -1){
-                System.out.println("OPTIONS OVER");
+                int optionStart = 4 + tokenLength;
+                byte[] messageId = {message[2], message[3]};
+                messageParsedTest = new Message(
+                    ((message[0] & 0xC0 ) >> 6), 
+                    TypeCode.CodeName((message[0] & 0x30) >> 4),
+                    (message[0] & 0xF),
+                    ResponseCode.CodeName((int)message[1]),
+                    new BigInteger(messageId).intValue(),
+                    getOptions(Arrays.copyOfRange(message, optionStart, i)),
+                    getPayload(Arrays.copyOfRange(message, i, length))
+                );
+                break;                
             }
-            System.out.print(representation);
-            System.out.print(" ->> ");
-            System.out.print(Integer.parseInt(representation, 2));
-            System.out.print("  -- ");
             
         }
+        System.out.println(messageParsedTest.toString());
         return null;
     }
 
-    @Override
-    public String getContentCode(byte[] message) {
-        
-        return null;
+    public Map<OptionCode, String> getOptions(byte[] arrayOptions){
+        int optionDelta = ((arrayOptions[0] & 0xFF) & 0xF0) >> 4;
+        int optionLength = (arrayOptions[0] & 0xFF) & 0xF;
+
+        Map<OptionCode, String> options = new HashMap<>();
+        for(int i = 0; i < arrayOptions.length;){
+            if(i != 0){
+                int unsignedDelta = ((arrayOptions[i] & 0xFF) & 0xF0) >> 4;
+                optionDelta = optionDelta + unsignedDelta;
+                optionLength = (arrayOptions[i] & 0xFF) & 0xF;
+                if(optionLength == 0){
+                    optionLength = 1;
+                }
+                options.put(OptionCode.CodeName(optionDelta), getOptionValue(Arrays.copyOfRange(arrayOptions, i, i + optionLength), OptionCode.CodeName(optionDelta)));
+                
+            }else{
+                options.put(OptionCode.CodeName(optionDelta), getOptionValue(Arrays.copyOfRange(arrayOptions, i, i + optionLength), OptionCode.CodeName(optionDelta)));
+            }
+            
+            i += optionLength + 1;
+            
+        }
+        return options;
     }
 
     @Override
-    public String getMethodCode(byte[] message) {
-        // TODO Auto-generated method stub
-        return null;
+    public String getOptionValue(byte[] arrayList, OptionCode optionCode){
+        if(OptionCode.CONTENT_FORMAT == optionCode){
+            return new BigInteger(1, arrayList).toString();
+        }else if(OptionCode.ETAG == optionCode){
+            return new String(arrayList);
+        }
+
+        return "";
     }
 
     @Override
-    public String getOptionCode(byte[] message) {
-        // TODO Auto-generated method stub
-        return null;
-    }
-
-    @Override
-    public String getResponseCode(byte[] message) {
-        // TODO Auto-generated method stub
-        return null;
-    }
-
-    @Override
-    public String getTypeCode(byte[] message) {
-        // TODO Auto-generated method stub
-        return null;
-    }
+    public String getPayload(byte[] arrayOptions){
+        System.out.println(new String(arrayOptions, StandardCharsets.UTF_8));
+        return "deez nuts";
+    };
     
 }
+
+

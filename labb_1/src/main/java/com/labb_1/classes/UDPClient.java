@@ -38,11 +38,7 @@ public class UDPClient {
             byte[] sendBuffer2 = new byte[512];
             DatagramPacket responsePayload = new DatagramPacket(sendBuffer2, sendBuffer2.length);
             socket.receive(responsePayload);
-            coapParser.parseMessage(responsePayload.getData());
-            String quote = new String(sendBuffer2, 0, responsePayload.getLength());
-
-            System.out.println(quote);
-            System.out.println();
+            coapParser.parseMessage(responsePayload.getData(), responsePayload.getLength());
         } catch (IOException e) {
             // TODO Auto-generated catch block
             e.printStackTrace();
