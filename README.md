@@ -35,4 +35,4 @@ The database of this HTTP/Rest server will be handled by a JSON file.
 * Need to check what is opaque type
 * Need also to figure it out what happens when a option is 0 bytes long. How is the content format decided?
 
-Labb one uses the CoAP standard [(RFC 6690, RFC 7252, RFC 7959, RFC 7641)](test.com)
+Labb one uses the CoAP standard [(RFC 6690, RFC 7252, RFC 7959, RFC 7641)](https://github.com/Ninhow/DT065A-IoT_Protocols/blob/master/coap-cheatsheet.pdf)
