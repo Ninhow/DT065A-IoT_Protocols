@@ -19,7 +19,6 @@ The database of this HTTP/Rest server will be handled by a JSON file.
 
 
 ##CoAP Client (Labb 1).
-The database of this HTTP/Rest server will be handled by a JSON file.
 
 ### Finished tasks
 * Created types for Message, MethodCode, OptionCode, ResponseCode, TypeCode.
