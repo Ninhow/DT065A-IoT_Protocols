@@ -6,6 +6,7 @@ import java.io.InputStreamReader;
 import java.net.ServerSocket;
 import java.net.Socket;
 
+import com.iot.app.utils.Logger;
 import com.iot.app.utils.Parser;
 import com.iot.app.classes.RequestHeader;
 
@@ -32,8 +33,8 @@ public class HttpServer {
 
         RequestHeader requestHeader = new RequestHeader(Parser.getFirstWord(br.readLine()),
                 Parser.getFirstWord(br.readLine()), Parser.getFirstWord(br.readLine()),
-                Parser.getFirstWord(br.readLine()));
-        System.out.println(requestHeader.toString());
+                Parser.getFirstWord(br.readLine()), "path", "http");
+        Logger.logWarning(requestHeader.toString());
     }
 
     private void requestHandler() {

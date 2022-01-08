@@ -18,4 +18,12 @@ public interface RequestHeaderInterface {
 
     public String getConnectionLength();
 
+    public String getPath();
+
+    public void setPath(String path);
+
+    public String getProtocol();
+
+    public void setProtocol(String protocol);
+
 }

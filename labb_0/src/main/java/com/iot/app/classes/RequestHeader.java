@@ -8,12 +8,17 @@ public class RequestHeader implements RequestHeaderInterface {
     private String host;
     private String connectionType;
     private String connectionLength;
+    private String path;
+    private String protocol;
 
-    public RequestHeader(String requestType, String host, String connectionType, String connectionLength) {
+    public RequestHeader(String requestType, String host, String connectionType, String connectionLength, String path,
+            String protocol) {
         this.requestType = requestType;
         this.host = host;
         this.connectionType = connectionType;
         this.connectionLength = connectionLength;
+        this.path = path;
+        this.protocol = protocol;
     }
 
     @Override
@@ -61,6 +66,27 @@ public class RequestHeader implements RequestHeaderInterface {
     public String toString() {
         return "Request-Type: " + this.requestType + "\n" + "Host: " + this.host + "\n" + "Connection-type: "
                 + this.connectionType + "\n" + "Connection-length: " + this.connectionLength;
+    }
+
+    @Override
+    public String getPath() {
+        return this.path;
+    }
+
+    @Override
+    public void setPath(String path) {
+        this.path = path;
+    }
+
+    @Override
+    public String getProtocol() {
+        return this.protocol;
+    }
+
+    @Override
+    public void setProtocol(String protocol) {
+        this.protocol = protocol;
+
     }
 
 }
