@@ -4,6 +4,16 @@ import java.util.HashMap;
 import java.util.Map;
 
 public enum ResponseCode {
+    
+    EMPTY(0), //Send methods
+    GET(1),
+    POST(2),
+    PUT(3),
+    DELETE(4),
+    FETCH(5),
+    PATCH(6),
+    IPATCH(7),
+
     CREATED(65),  //Success
     DELETED(66),  
     VALID(67),    
@@ -29,7 +39,7 @@ public enum ResponseCode {
     SERVICE_UNAVAILABLE(163),
     GATEWAY_TIMEOUT(164),
     PROXY_NOT_SUPPORTED(165);
-
+    
     private Integer responseCode;
     private ResponseCode(Integer responseCode){
         this.responseCode = responseCode;
