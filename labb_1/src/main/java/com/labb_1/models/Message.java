@@ -14,13 +14,14 @@ public class Message {
 
     public Message(){}
     public Message(
-        int version, 
-        TypeCode typeCode, 
-        int tokenLength, 
-        ResponseCode responseCode, 
-        int messageID, 
-        Map<OptionCode, String> options, 
-        String payload){
+            int version, 
+            TypeCode typeCode, 
+            int tokenLength, 
+            ResponseCode responseCode, 
+            int messageID, 
+            Map<OptionCode, String> options, 
+            String payload
+        ){
 
             this.version = version;
             this.typeCode = typeCode;
@@ -43,6 +44,7 @@ public class Message {
         for(int k = keys.size() - 1; k >= 0; k--){
             result += "Option Code: " + keys.get(k)+ "\n" + "Value: " + options.get(keys.get(k)) + "\n";
         }
+        result +="Payload: " +  payload + "\n";
         return result;
     }
     public int getVersion() {

@@ -28,7 +28,8 @@ public class UDPClient {
     }
 
     public void sendMessage() {
-                               //Header     //Type      //M  E S S A G E   |   //Options       
+
+                                //Header     //Type      //M  E S S A G E   |   //Options       
         byte [] sendBuffer = {(byte)0x40 , (byte)0x01, (byte)0x04, (byte)0xd2, (byte)0xb4, (byte)0x74, (byte)0x65, (byte)0x73, (byte)0x74};
         DatagramPacket sendPayload = new DatagramPacket(sendBuffer, sendBuffer.length);
 

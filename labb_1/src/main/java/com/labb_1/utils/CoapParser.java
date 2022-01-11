@@ -52,10 +52,12 @@ public class CoapParser implements CoapParserInterface{
                 if(optionLength == 0){
                     optionLength = 1;
                 }
-                options.put(OptionCode.CodeName(optionDelta), getOptionValue(Arrays.copyOfRange(arrayOptions, i, i + optionLength), OptionCode.CodeName(optionDelta)));
+
+                options.put(OptionCode.CodeName(optionDelta), getOptionValue(Arrays.copyOfRange(arrayOptions, i + 1, i + optionLength), OptionCode.CodeName(optionDelta)));
                 
             }else{
-                options.put(OptionCode.CodeName(optionDelta), getOptionValue(Arrays.copyOfRange(arrayOptions, i, i + optionLength), OptionCode.CodeName(optionDelta)));
+                System.out.println(optionDelta);
+                options.put(OptionCode.CodeName(optionDelta), getOptionValue(Arrays.copyOfRange(arrayOptions, i + 1, i + optionLength), OptionCode.CodeName(optionDelta)));
             }
             
             i += optionLength + 1;
@@ -77,8 +79,7 @@ public class CoapParser implements CoapParserInterface{
 
     @Override
     public String getPayload(byte[] arrayOptions){
-        System.out.println(new String(arrayOptions, StandardCharsets.UTF_8));
-        return "deez nuts";
+        return new String(arrayOptions, StandardCharsets.UTF_8);
     };
     
 }

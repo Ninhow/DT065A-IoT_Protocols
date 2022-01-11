@@ -2,7 +2,6 @@ package com.labb_1.models;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Map.Entry;
 
 import com.labb_1.interfaces.CodeInterface;
 
@@ -32,7 +31,6 @@ public enum ContentCode implements CodeInterface<ContentCode>{
             table.put(env.getInteger(), env);
         }
     }
-
 
     @Override
     public ContentCode CodeName(Integer methodType) {
